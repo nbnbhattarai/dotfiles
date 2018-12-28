@@ -176,6 +176,7 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3blocks
         position top
+        font pango:DejaVu Sans Mono 8
 
         bindsym button4         nop
         bindsym button5         nop
@@ -202,8 +203,8 @@ bar {
 bindsym $mod+$Shift+l exec --no-startup-id slock
 
 # brightness keymapx
-bindsym XF86MonBrightnessUp exec xbacklight +10
-bindsym XF86MonBrightnessDown exec xbacklight -10
+bindsym XF86MonBrightnessUp exec xbacklight +5
+bindsym XF86MonBrightnessDown exec xbacklight -5
 
 # Media player controls
 bindsym XF86AudioPlay exec "playerctl play-pause; mpc toggle"
@@ -222,10 +223,21 @@ exec --no-startup-id parcellite -n
 exec --no-startup-id compton --config ~/.config/i3/compton.conf -b
 exec --no-startup-id thunar --daemon
 exec --no-startup-id xautolock -time 10 -locker "~/.config/i3/locker.sh"
+exec --no-startup-id caffeine
+exec --no-startup-id dunst
 
+
+# program key bindings
+bindsym $mod+Ctrl+t exec thunar
+bindsym $mod+Ctrl+e exec emacs
+
+# Touchpad Tab Enable
+exec --no-startup-id xinput set-prop "ETPS/2 Elantech Touchpad" "libinput Tapping Enabled" 1
 # Background image
 exec --no-startup-id ~/.config/i3/wallpaper.sh
 
+# no title bar
+# new_window pixel
 
 # Power management
 set $Locker ~/.config/i3/locker.sh
@@ -261,6 +273,7 @@ for_window [class="Nm-connection-editor"]           floating enable
 for_window [class="Software-properties-gtk"]        floating enable
 for_window [class="about"]                          floating enable
 for_window [class="appfinder"]                      floating enable
+for_window [class="Pavucontrol"]                    floating enable
 
 # class                 border  backgr. text    indicator child_border
 client.focused          #2b83a6 #2b83a6 #ffffff #dddddd   #2b83a6
@@ -269,3 +282,16 @@ client.unfocused        #252525 #252525 #86888c #292d2e   #5a5a5a
 client.urgent           #d64e4e #d64e4e #ffffff #d64e4e   #d64e4e
 client.placeholder      #252525 #0c0c0c #ffffff #252525   #262626
 client.background       #252525
+
+
+# assign program to workspace
+assign [class="Thunar"]             → $ws1
+assign [class="Evince"]             → $ws1
+assign [class="Emacs"]              → $ws3
+# assign [class="Alacritty"]        → $ws2
+assign [class="Code"]               → $ws4
+assign [class="Chromium"]           → $ws5
+assign [class="Firefox"]            → $ws5
+assign [class="vlc"]                → $ws7
+assign [class="Transmission-gtk"]   → $ws8
+assign [class="Skype"]              → $ws7

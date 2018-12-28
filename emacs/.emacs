@@ -5,10 +5,22 @@
 ;; add melpa in package archives
 
 (load "package")
-(package-initialize)
+
+(setq package-list '(ace-jump-mode company-auctex auctex company-jedi company-web elpy company find-file-in-project flycheck flymake-google-cpplint flymake-easy google-c-style highlight-indentation hlinum ivy jedi auto-complete jedi-core epc ctable concurrent magit git-commit ghub graphql magit-popup material-theme multiple-cursors pkg-info epl popup powerline py-autopep8 python-environment deferred pyvenv quickrun restart-emacs s smartparens dash treepy web-completion-data web-mode which-key with-editor async yasnippet))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
+
+(package-initialize)
+
+; fetch the list of packages available 
+(unless package-archive-contents
+  (package-refresh-contents))
+
+; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 ;; Ido mode which is very good, file find etc. etc.
 (setq-default ido-mode)
@@ -243,7 +255,10 @@
 (global-semantic-idle-scheduler-mode 1)
 
 ;; python IDE
+(package-initialize)
 (elpy-enable)
+
+(add-hook 'elpy-mode-hook 'flycheck-mode)
 
 ;; fixing a key binding bug in elpy
 (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
@@ -251,6 +266,11 @@
 ;; for autopep (formating python code automatically)
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+(add-to-list 'company-backends 'company-jedi)
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+
 
 ;; fixing another key binding bug in iedit modes
 (define-key global-map (kbd "C-c o") 'iedit-mode)
@@ -331,6 +351,12 @@
 ;; which key for keybindging help
 (require 'which-key)
 (which-key-mode)
+
+;; web mode
+(add-hook 'web-mode-hook
+          (lambda ()
+            (rainbow-mode)
+            (setq web-mode-markup-indent-offset 2)))
 
 ;; ruby mode hook
 

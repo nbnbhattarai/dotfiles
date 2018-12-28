@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-feh --bg-scale ~/.config/i3/backgrounds/smc.png
+feh --bg-scale ~/.config/i3/wallpapers/sherlock.jpg

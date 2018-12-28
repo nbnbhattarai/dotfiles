@@ -19,4 +19,5 @@ source /usr/share/git/completion/git-completion.bash
 # source /usr/share/nvm/install-nvm-exec
 #--- end of NVM ---
 
+PATH=$PATH:/home/shadowswalker/.local/bin
 PS1='\[\e[32m\]\u\[\e[92m\]@\[\e[32m\]\h \[\e[96m\]\W$(__git_ps1 " \[\e[92m\](\[\e[95m\]%s\[\e[92m\])\[\e[39m\]")\$ '
