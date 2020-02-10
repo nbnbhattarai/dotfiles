@@ -6,7 +6,7 @@
 
 (load "package")
 
-(setq package-list '(ace-jump-mode company-auctex auctex company-jedi company-web elpy company find-file-in-project flycheck flymake-google-cpplint flymake-easy google-c-style highlight-indentation hlinum ivy jedi auto-complete jedi-core epc ctable concurrent magit git-commit ghub graphql magit-popup material-theme multiple-cursors pkg-info epl popup powerline py-autopep8 python-environment deferred pyvenv quickrun restart-emacs s smartparens dash treepy web-completion-data web-mode which-key with-editor async yasnippet))
+(setq package-list '(ace-jump-mode company-auctex auctex company-jedi company-web elpy company find-file-in-project flycheck flymake-google-cpplint flymake-easy google-c-style highlight-indentation hlinum ivy jedi auto-complete jedi-core epc ctable concurrent magit git-commit ghub graphql magit-popup material-theme multiple-cursors pkg-info epl popup powerline py-autopep8 python-environment deferred pyvenv quickrun restart-emacs s smartparens dash treepy web-completion-data web-mode which-key with-editor async yasnippet helm-projectile ripgrep auto-virtualenv prettier-js add-node-modules-path emmet-mode))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
@@ -36,6 +36,7 @@
 (setq inhibit-splash-screen t
       initial-scratch-message nil
       initial-major-mode 'org-mode)
+(setq org-startup-indented t)
 
 ;; disable scrollbar-mode, toolbar-mode, menu-bar-mode
 (scroll-bar-mode -1)
@@ -243,6 +244,8 @@
 
 ;; tun on semantic
 (semantic-mode 1)
+
+(require 'company-tabnine)
 ;; let's define a function which adds semantic as a suggestion backed to auto
 ; complete and hook this function to c-mode-common-hook
 (defun my:add-semantic-to-autocomplete()
@@ -275,6 +278,9 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 
+;; auto virtualenv
+(require 'auto-virtualenv)
+(add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
 
 ;; fixing another key binding bug in iedit modes
 (define-key global-map (kbd "C-c o") 'iedit-mode)
@@ -323,13 +329,10 @@
 (setq epg-gpg-program "gpg2")
 
 ;; for material theme
-(load-theme 'material t)
+(load-theme 'zenburn t)
 
 ;; to decrease font of emacs
-(set-face-attribute 'default (selected-frame) :height 110)
-
-;; (require 'ace-jump)
-(define-key global-map (kbd "C-c C-a") 'ace-jump-mode)
+(set-face-attribute 'default (selected-frame) :height 130)
 
 ;; ;; switch windows with ace-window, it's cool
 (global-set-key (kbd "M-p") 'ace-window)
@@ -362,7 +365,73 @@
             (rainbow-mode)
             (setq web-mode-markup-indent-offset 2)))
 
-;; ruby mode hook
+;; add node path on web mode
+(add-hook 'web-mode-hook
+          (lambda ()
+            (add-to-list 'exec-path "/home/shadowswalker/.nvm/versions/node/v10.13.0/bin/")))
 
-(add-hook 'ruby-mode-hook 'robe-mode)
-(require 'quickrun)
+;; projectile mode
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+;; ace jump
+(autoload
+  'ace-jump-mode
+  "ace-jump-mode"
+  "Emacs quick move minor mode"
+  t)
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+;; for jsx (react)
+(add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
+(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
+
+(defun web-mode-init-hook ()
+  "Hooks for Web mode.  Adjust indent."
+  (setq web-mode-markup-indent-offset 4))
+  
+(add-hook 'web-mode-hook  'web-mode-init-hook)
+
+(setq-default flycheck-disabled-checkers
+              (append flycheck-disabled-checkers
+                      '(javascript-jshint json-jsonlist)))
+
+;; enable emmet with web-mode
+(add-hook 'web-mode-hook  'emmet-mode)
+
+(require 'prettier-js)
+(add-hook 'web-mode-hook 'prettier-js-mode)
+
+(setq prettier-js-args '(
+                         "--trailing-comma" "all"
+                         "--bracket-spacing" "false"
+                         ))
+
+(defun enable-minor-mode (my-pair)
+  "Enable minor mode if filename match the regexp.  MY-PAIR is a cons cell (regexp . minor-mode)."
+  (if (buffer-file-name)
+      (if (string-match (car my-pair) buffer-file-name)
+          (funcall (cdr my-pair)))))
+(put 'downcase-region 'disabled nil)
+
+(require 'org-journal)
+(setq org-journal-dir '/home/shadowswalker/Documents/org/journals)
+
+;; set line-wrap
+(global-visual-line-mode t)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (company-tabnine ein writegood-mode writeroom-mode flyspell-correct-ivy org-journal zenburn-theme which-key web-mode-edit-element ujelly-theme smartparens ripgrep restart-emacs quickrun pythonic py-autopep8 prettier-js powerline multiple-cursors material-theme markdown-preview-mode magit jedi hlinum helm-projectile helm-ag google-c-style ghub flymake-google-cpplint flycheck emmet-mode elpy doom-themes company-web company-jedi company-auctex clues-theme blackboard-theme auto-virtualenv add-node-modules-path ace-jump-mode abyss-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

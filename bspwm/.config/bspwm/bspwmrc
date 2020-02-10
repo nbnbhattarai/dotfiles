@@ -1,0 +1,76 @@
+#! /bin/sh
+
+pkill sxhkd
+sxhkd &
+
+bspc monitor -d I II III IV V VI VII VIII IX X
+
+bspc config border_width       1
+bspc config window_gap         4
+# bspc config top_padding        0
+
+bspc config split_ratio                 0.52
+bspc config borderless_monocle          true
+
+# bspc config gapless_monocle             true
+# bspc config focus_follows_pointer       true
+# bspc config history_aware_focus         true
+
+# ignore focus window
+bspc config ignore_ewmh_focus true
+
+# for desktop 1
+bspc rule -a Thunar                  desktop=^1
+bspc rule -a Pcmanfm                 desktop=^1
+bspc rule -a ranger                  desktop=^1
+
+# for desktop 3
+bspc rule -a Emacs                   desktop=^3 state=tiled
+
+# for desktop 4
+bspc rule -a Code                    desktop=^4
+bspc rule -a Mendeley\ Desktop       desktop=^4
+
+#for desktop 5
+bspc rule -a Chromium                desktop=^5
+bspc rule -a Firefox                 desktop=^5
+
+# for desktop 6
+bspc rule -a vlc                     desktop=^6
+bspc rule -a mpv                     desktop=^6 state=floating
+bspc rule -a Anki                    desktop=^6
+
+# for desktop 7
+bspc rule -a Skype                   desktop=^7
+bspc rule -a Mailspring              desktop=^7
+
+# for desktop 8
+bspc rule -a Transmission-gtk     desktop="^8"
+
+bspc rule -a GoldenDict     state=floating rectangle=100x150
+
+# start polybar with bspwm
+pkill polybar
+polybar custom &
+
+pkill picom
+picom &
+
+pkill parcellite
+parcellite &
+
+pkill pa-applet
+pa-applet&
+
+pkill nm-applet
+nm-applet&
+
+pkill dunst
+dunst&
+
+# set wallpaper
+feh --bg-scale ~/.config/bspwm/wallpapers/812062.png
+
+# urxvt daemon
+# pkill urxvtd
+pgrep urxvtd || urxvtd --quiet --opendisplay --fork

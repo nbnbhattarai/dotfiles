@@ -30,13 +30,15 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec WINIT_HIDPI_FACTOR=1 alacritty
+bindsym $mod+Return exec WINIT_HIDPI_FACTOR=1 urxvt
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -l 10 -p 'dmenu'"
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -l 10 -p 'dmenu'"
+bindsym $mod+d exec rofi -show run
+
 # bindsym $mod+d exec dmenu_run
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
@@ -214,18 +216,23 @@ bindsym XF86AudioPrev exec "playerctl previous; mpc prev"
 # screenshot
 bindsym Print exec xfce4-screenshooter
 
+# show map
+bindsym $mod+Shift+u exec "feh /home/shadowswalker/Documents/map.jpg"
+
 # background processes
 exec --no-startup-id nm-applet
 exec --no-startup-id pa-applet
-exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
-exec --no-startup-id (/usr/lib/geoclue-2.0/demos/agent | redshift-gtk)
-exec --no-startup-id parcellite -n
-exec --no-startup-id compton --config ~/.config/i3/compton.conf -b
+exec --no-startup-id "gnome-keyring-daemon --start --components=pkcs11,secrets,ssh"
+# exec --no-startup-id (/usr/lib/geoclue-2.0/demos/agent | redshift-gtk)
+exec --no-startup-id "parcellite -n"
+exec --no-startup-id picom
+# exec --no-startup-id compton --config ~/.config/i3/compton.conf -b
 exec --no-startup-id thunar --daemon
 exec --no-startup-id xautolock -time 10 -locker "~/.config/i3/locker.sh"
 exec --no-startup-id caffeine
 exec --no-startup-id dunst
-
+exec --no-startup-id safeeyes
+exec --no-startup-id "xflux -l 27.577426 -g 83.699871"
 
 # program key bindings
 bindsym $mod+Ctrl+t exec thunar
@@ -274,6 +281,9 @@ for_window [class="Software-properties-gtk"]        floating enable
 for_window [class="about"]                          floating enable
 for_window [class="appfinder"]                      floating enable
 for_window [class="Pavucontrol"]                    floating enable
+for_window [class="goldendict"]                     floating enable
+for_window [title="Dictionary"]                     floating enable
+for_window [title="GoldenDict"]                     floating enable
 
 # class                 border  backgr. text    indicator child_border
 client.focused          #2b83a6 #2b83a6 #ffffff #dddddd   #2b83a6
@@ -292,6 +302,11 @@ assign [class="Emacs"]              → $ws3
 assign [class="Code"]               → $ws4
 assign [class="Chromium"]           → $ws5
 assign [class="Firefox"]            → $ws5
-assign [class="vlc"]                → $ws7
+assign [class="vlc"]                → $ws6
+assign [class="mpv"]                → $ws6
 assign [class="Transmission-gtk"]   → $ws8
 assign [class="Skype"]              → $ws7
+assign [class="Viber"]              → $ws7
+assign [class="Anki"]               → $ws6
+assign [class="Mailspring"]         → $ws7
+assign [class="Mendeley"]           → $ws4

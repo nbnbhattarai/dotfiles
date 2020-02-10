@@ -278,6 +278,9 @@ display_batt_charging() {
 # Returns:
 #   The discharging indicator.
 display_batt_discharging() {
+    # sending notification in case of discharging
+    dunstify --urgency=critical --timeout=20000 --replace=1099 --icon="/usr/share/icons/gnome/scalable/status/battery-caution-symbolic.svg" "Battery is Discharging, Plug in Charger"
+
     if [ -n "$_SYMBOL_DISCHARGING" ]; then
         echo -n "$(span -c "${_COLOR_DISCHARGING}" "$_SYMBOL_DISCHARGING") "
     fi
