@@ -1,0 +1,2 @@
+rofi.modi: window,run,ssh,drun,windowcd
+rofi.theme: /usr/share/rofi/themes/android_notification.rasi

@@ -1,13 +1,25 @@
-#! /bin/sh
+#!/bin/sh
 
-pkill sxhkd
-sxhkd &
+# start polybar with bspwm
+killall -q polybar
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+# pkill sxhkd
+# sxhkd &
 
-bspc config border_width       1
+polybar custom &
+
+if [[ $(bspc query -M | wc -l) == 4 ]]; then
+    notify-send "Two monitors Detected!"
+    bspc monitor eDP1 -d 1 2 3 4 5 6 7 8
+    bspc monitor DP1  -d 9 0
+    # polybar bar_extended &
+else
+    bspc monitor eDP1 -d 1 2 3 4 5 6 7 8 9 0
+fi
+
+bspc config border_width       2
 bspc config window_gap         4
-# bspc config top_padding        0
+bspc config top_padding        0
 
 bspc config split_ratio                 0.52
 bspc config borderless_monocle          true
@@ -18,6 +30,11 @@ bspc config borderless_monocle          true
 
 # ignore focus window
 bspc config ignore_ewmh_focus true
+bspc config focus_follows_pointer true
+bspc config history_aware_focus true
+bspc config focus_by_distance true
+
+bspc rule -a dialog state="floating" center=true
 
 # for desktop 1
 bspc rule -a Thunar                  desktop=^1
@@ -26,51 +43,43 @@ bspc rule -a ranger                  desktop=^1
 
 # for desktop 3
 bspc rule -a Emacs                   desktop=^3 state=tiled
+bspc rule -a Code                    desktop=^3
 
 # for desktop 4
-bspc rule -a Code                    desktop=^4
 bspc rule -a Mendeley\ Desktop       desktop=^4
+bspc rule -a okular                  desktop=^4
+bspc rule -a polar-bookshelf         desktop=^4
 
 #for desktop 5
 bspc rule -a Chromium                desktop=^5
-bspc rule -a Firefox                 desktop=^5
+bspc rule -a firefox                 desktop=^5
 
 # for desktop 6
-bspc rule -a vlc                     desktop=^6
+bspc rule -a vlc                     desktop=^6 state=floating
 bspc rule -a mpv                     desktop=^6 state=floating
-bspc rule -a Anki                    desktop=^6
+bspc rule -a Steam                   desktop=^6 state=floating
+bspc rule -a zoom		     desktop=^6
 
 # for desktop 7
 bspc rule -a Skype                   desktop=^7
 bspc rule -a Mailspring              desktop=^7
+bspc rule -a ViberPC		     desktop=^7
 
 # for desktop 8
-bspc rule -a Transmission-gtk     desktop="^8"
+# bspc rule -a Anki                    desktop=^8
+bspc rule -a Anki center=true state=floating rectangle=700x500+0+0 
 
-bspc rule -a GoldenDict     state=floating rectangle=100x150
+bspc rule -a nixnote2                desktop=^8
+bspc rule -a ghostwriter             desktop=^8
+bspc rule -a Transmission-gtk        desktop=^8
 
-# start polybar with bspwm
-pkill polybar
-polybar custom &
+bspc rule -a GoldenDict     state=floating --rectangle=100x150
+bspc rule -a imv            state=floating --rectangle=500x400
+bspc rule -a Evince         state=floating
+bspc rule -a Arandr         state=floating
+bspc rule -a Pavucontrol    state=floating
 
-pkill picom
-picom &
+# pkill dunst
+# dunst &> /dev/null
 
-pkill parcellite
-parcellite &
-
-pkill pa-applet
-pa-applet&
-
-pkill nm-applet
-nm-applet&
-
-pkill dunst
-dunst&
-
-# set wallpaper
-feh --bg-scale ~/.config/bspwm/wallpapers/812062.png
-
-# urxvt daemon
-# pkill urxvtd
-pgrep urxvtd || urxvtd --quiet --opendisplay --fork
+$HOME/.config/bspwm/autostart.sh &>> /home/shadowswalker/.config/bspwm/autostart.log

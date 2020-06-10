@@ -9,7 +9,7 @@
 (setq package-list '(ace-jump-mode company-auctex auctex company-jedi company-web elpy company find-file-in-project flycheck flymake-google-cpplint flymake-easy google-c-style highlight-indentation hlinum ivy jedi auto-complete jedi-core epc ctable concurrent magit git-commit ghub graphql magit-popup material-theme multiple-cursors pkg-info epl popup powerline py-autopep8 python-environment deferred pyvenv quickrun restart-emacs s smartparens dash treepy web-completion-data web-mode which-key with-editor async yasnippet helm-projectile ripgrep auto-virtualenv prettier-js add-node-modules-path emmet-mode))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")))
 
 (package-initialize)
 
@@ -59,8 +59,8 @@
 
 ;; set color for highlight for selected text
 ;; (set-face-attribute 'region nil :background "#777" :foreground "#ffffff")
-(set-face-attribute 'default nil :font "Inconsolata" )
-(set-frame-font "Inconsolata" nil t)
+;; (set-face-attribute 'default nil :font "Inconsolata" )
+;; (set-frame-font "Inconsolata" nil t)
 
 
 ;; flyspell
@@ -252,6 +252,10 @@
   (add-to-list 'ac-sources 'ac-source-semantic)
 )
 (add-hook 'c-mode-common-hook 'my:add-semantic-to-autocomplete)
+
+;; set indentation to 4 spaces
+(setq-default c-basic-offset 4)
+
 ;; turn on ede mode
 (global-ede-mode 1)
 
@@ -274,7 +278,7 @@
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
-(add-to-list 'company-backends 'company-jedi)
+;; (add-to-list 'company-backends 'company-jedi)
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 
@@ -329,7 +333,8 @@
 (setq epg-gpg-program "gpg2")
 
 ;; for material theme
-(load-theme 'zenburn t)
+;; (load-theme 'zenburn t)
+(load-theme 'dracula t)
 
 ;; to decrease font of emacs
 (set-face-attribute 'default (selected-frame) :height 130)
@@ -421,6 +426,14 @@
 ;; set line-wrap
 (global-visual-line-mode t)
 
+;; multi-term for terminal
+(require 'multi-term)
+(global-set-key (kbd "C-c t") 'multi-term)
+
+;; skewer mode
+(add-hook 'js2-mode-hook 'skewer-mode)
+(add-hook 'css-mode-hook 'skewer-css-mode)
+(add-hook 'html-mode-hook 'skewer-html-mode)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -428,7 +441,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (company-tabnine ein writegood-mode writeroom-mode flyspell-correct-ivy org-journal zenburn-theme which-key web-mode-edit-element ujelly-theme smartparens ripgrep restart-emacs quickrun pythonic py-autopep8 prettier-js powerline multiple-cursors material-theme markdown-preview-mode magit jedi hlinum helm-projectile helm-ag google-c-style ghub flymake-google-cpplint flycheck emmet-mode elpy doom-themes company-web company-jedi company-auctex clues-theme blackboard-theme auto-virtualenv add-node-modules-path ace-jump-mode abyss-theme))))
+    (yaml-mode typescript-mode zenburn-theme writeroom-mode writegood-mode which-key web-mode-edit-element ujelly-theme smartparens ripgrep restart-emacs quickrun pythonic py-autopep8 prettier-js powerline org-journal multiple-cursors multi-term material-theme markdown-preview-mode magit jedi hlinum helm-projectile helm-ag google-c-style ghub flyspell-correct-ivy flymake-google-cpplint flycheck emmet-mode elpy ein dracula-theme doom-themes company-web company-tabnine company-jedi company-auctex clues-theme blackboard-theme auto-virtualenv add-node-modules-path ace-jump-mode abyss-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -188,7 +188,7 @@ bar {
         workspace_buttons       yes
         strip_workspace_numbers yes
 
-        colors {
+ colors {
            background  #212121
            statusline  #dddddd
            separator   #666666

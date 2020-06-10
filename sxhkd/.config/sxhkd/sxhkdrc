@@ -4,8 +4,8 @@
 
 # terminal emulator
 super + Return
-	urxvt
-	#alacritty
+	alacritty
+	# urxvt -sb
 
 # program launcher
 super + d
@@ -140,6 +140,13 @@ super + {Left,Down,Up,Right}
 
 # Player control
 # Media player controls
+super + XF86AudioPlay
+    mpc toggle
+super + XF86AudioNext
+    mpc next
+super + XF86AudioPrev
+    mpc prev
+
 XF86AudioPlay
     playerctl play-pause; mpc toggle
 XF86AudioNext
@@ -149,13 +156,17 @@ XF86AudioPrev
 
 # brightness keymapx
 XF86MonBrightnessUp
-    xbacklight +5
+    xbacklight +5;
+    sh /home/shadowswalker/.sw/scripts/br.sh
 XF86MonBrightnessDown
-    xbacklight -5
+    xbacklight -5;
 super + XF86MonBrightnessUp
     xbacklight +1
 super + XF86MonBrightnessDown
     xbacklight -1
+
+Print
+    sleep 0.2; flameshot gui;
 
 # lock screen
 super + control + l
@@ -167,10 +178,61 @@ shift + alt + p
 
 # list all the windows in current desktop
 alt + j
-    sh /home/shadowswalker/.sw/scripts/windows_list_bsp.sh
-
+    rofi -show windowcd
+    # sh /home/shadowswalker/.sw/scripts/windows_list_bsp.sh
 
 super + shift + u
       feh /home/shadowswalker/Documents/map.jpg
 
+# goto the last active window (node)
+super + e
+      bspc node -f last
 
+# shortcuts for programs
+super + shift + f
+      firefox
+
+super + shift + e
+      emacs
+
+super + shift + m
+      mendeleydesktop
+
+super + shift + o
+      okular
+
+super + shift + p
+      pcmanfm
+
+# change opacity of current window
+alt + ctrl + 0
+    picom-trans -c +10
+
+alt + ctrl + 9
+    picom-trans -c -10
+
+
+# send windows to neatherlands
+alt + ctrl + h
+    bspc node -g hidden=on
+
+alt + ctrl + j
+    /home/shadowswalker/.config/rofi/scripts/rofi-list-hidden-windows.sh
+
+alt + ctrl + o
+    /home/shadowswalker/.config/rofi/scripts/rofi-emoji.sh
+
+shift + alt + l
+    slock
+
+# for ncmpcpp
+super + n
+    floatexec alacritty -e ncmpcpp
+
+# for htop
+super + shift + minus
+    floatexec -e htop
+
+# for anki
+super + a
+    anki
