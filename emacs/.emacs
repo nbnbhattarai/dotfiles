@@ -6,12 +6,33 @@
 
 (load "package")
 
-(setq package-list '(ace-jump-mode company-auctex auctex company-jedi company-web elpy company find-file-in-project flycheck flymake-google-cpplint flymake-easy google-c-style highlight-indentation hlinum ivy jedi auto-complete jedi-core epc ctable concurrent magit git-commit ghub graphql magit-popup material-theme multiple-cursors pkg-info epl popup powerline py-autopep8 python-environment deferred pyvenv quickrun restart-emacs s smartparens dash treepy web-completion-data web-mode which-key with-editor async yasnippet helm-projectile ripgrep auto-virtualenv prettier-js add-node-modules-path emmet-mode))
+(defvar myPackages
+
+  '(better-defaults                 ;; Set up some better Emacs defaults
+
+    elpy                            ;; Emacs Lisp Python Environment
+
+    flycheck                        ;; On the fly syntax checking
+
+    material-theme                  ;; Theme
+
+    )
+
+  )
+
+(setq package-list '(ace-jump-mode company-auctex auctex company-jedi company-web elpy company find-file-in-project flycheck flymake-google-cpplint flymake-easy google-c-style highlight-indentation hlinum ivy jedi auto-complete jedi-core epc ctable concurrent magit git-commit ghub graphql magit-popup material-theme multiple-cursors pkg-info epl popup powerline py-autopep8 python-environment deferred pyvenv quickrun restart-emacs s smartparens dash treepy web-completion-data web-mode which-key with-editor async yasnippet helm-projectile ripgrep prettier-js add-node-modules-path emmet-mode))
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("melpa-stable" . "https://stable.melpa.org/packages/")))
-
 (package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(use-package which-key
+  :ensure t
+  )
 
 ; fetch the list of packages available 
 (unless package-archive-contents
@@ -32,11 +53,28 @@
 (add-hook 'c-mode-hook #'smartparens-mode)
 (add-hook 'python-mode-hook #'smartparens-mode)
 
+
+;; org-roam config
+(use-package org-roam
+      :ensure t
+      :hook
+      (after-init . org-roam-mode)
+      :custom
+      (org-roam-directory (file-truename "/home/shadowswalker/Documents/org-roam/"))
+      :bind (:map org-roam-mode-map
+                  (("C-c n l" . org-roam)
+                   ("C-c n f" . org-roam-find-file)
+                   ("C-c n g" . org-roam-graph))
+                  :map org-mode-map
+                  (("C-c n i" . org-roam-insert))
+                  (("C-c n I" . org-roam-insert-immediate))))
+
 ;; I don't want the splash screen, load scratch directly
 (setq inhibit-splash-screen t
       initial-scratch-message nil
       initial-major-mode 'org-mode)
 (setq org-startup-indented t)
+(setq org-list-allow-alphabetical t)
 
 ;; disable scrollbar-mode, toolbar-mode, menu-bar-mode
 (scroll-bar-mode -1)
@@ -59,7 +97,7 @@
 
 ;; set color for highlight for selected text
 ;; (set-face-attribute 'region nil :background "#777" :foreground "#ffffff")
-;; (set-face-attribute 'default nil :font "Inconsolata" )
+;; (set-face-attribute 'default t :font "Hack" :height 110)
 ;; (set-frame-font "Inconsolata" nil t)
 
 
@@ -228,19 +266,24 @@
 ;; stark flymake-google-cpplint-load
 ;; let's define a function for flymake initialization
 
-(defun my:flymake-google-init()
-  (require 'flymake-google-cpplint)
-  (custom-set-variables
-   '(flymake-google-cpplint-command "/usr/bin/cpplint"))
-  (flymake-google-cpplint-load)
-)
-(add-hook 'c-mode-hook 'my:flymake-google-init)
-(add-hook 'c++-mode-hook 'my:flymake-google-init)
+;; (defun my:flymake-google-init()
+;;   (require 'flymake-google-cpplint)
+;;   (custom-set-variables
+;;    '(flymake-google-cpplint-command "/usr/bin/cpplint"))
+;;   (flymake-google-cpplint-load)
+;; )
+;; (add-hook 'c-mode-hook 'my:flymake-google-init)
+;; (add-hook 'c++-mode-hook 'my:flymake-google-init)
 
 ;; start google-c-style with emacs
-(require 'google-c-style)
-(add-hook 'c-mode-common-hook 'google-set-c-style)
-(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+;; (require 'google-c-style)
+;; (add-hook 'c-mode-common-hook 'google-set-c-style)
+;; (add-hook 'c-mode-common-hook 'google-make-newline-indent)
+
+;; Enable Flycheck
+;; (when (require 'flycheck nil t)
+;;   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 ;; tun on semantic
 (semantic-mode 1)
@@ -262,7 +305,6 @@
 (global-semantic-idle-scheduler-mode 1)
 
 ;; python IDE
-(package-initialize)
 (elpy-enable)
 
 (when (require 'flycheck nil t)
@@ -274,17 +316,21 @@
 ;; fixing a key binding bug in elpy
 (define-key yas-minor-mode-map (kbd "C-c k") 'yas-expand)
 
+;; use black auto formatter
+(use-package python-black
+  :demand t
+  :after python)
+
+;; add hooks for black on eply mode
+(add-hook 'elpy-mode-hook 'python-black-on-save-mode)
+
 ;; for autopep (formating python code automatically)
-(require 'py-autopep8)
-(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+;; (require 'py-autopep8)
+;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
-;; (add-to-list 'company-backends 'company-jedi)
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
-
-;; auto virtualenv
-(require 'auto-virtualenv)
-(add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
+(add-to-list 'company-backends 'company-jedi)
+;; (add-hook 'python-mode-hook 'jedi:setup)
+;; (setq jedi:complete-on-dot t)
 
 ;; fixing another key binding bug in iedit modes
 (define-key global-map (kbd "C-c o") 'iedit-mode)
@@ -292,11 +338,22 @@
 ;; fix C-S-enter for heading enter in ORG mode
 (require 'org)
 (define-key org-mode-map (kbd "M-S-RET") 'org-insert-todo-heading)
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
 
+;; use bullet points
+(add-hook 'org-mode-hook 'org-bullets-mode)
+
+;; wrap lines in org-mode
+(add-hook 'org-mode-hook '(lambda () (visual-line-mode 1)))
+
+;; org agenda files
+(setq org-agenda-files '("~/Documents/Orgs"))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python *.py t)))
 
 ;; =============  This is for Predictive mode ============
 ;; (add-to-list 'load-path "$HOME/.emacs.d/predictive")
@@ -337,7 +394,14 @@
 (load-theme 'dracula t)
 
 ;; to decrease font of emacs
-(set-face-attribute 'default (selected-frame) :height 130)
+(set-face-attribute 'default (selected-frame) :height 110)
+
+;; (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup)
+;; (defun my-minibuffer-setup ()
+;;        (set (make-local-variable 'face-remapping-alist)
+;;           '((default :height 0.9))))
+
+;; (add-to-list 'default-frame-alist '(font . "Inconsolata-14"))
 
 ;; ;; switch windows with ace-window, it's cool
 (global-set-key (kbd "M-p") 'ace-window)
@@ -402,6 +466,11 @@
               (append flycheck-disabled-checkers
                       '(javascript-jshint json-jsonlist)))
 
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
+
 ;; enable emmet with web-mode
 (add-hook 'web-mode-hook  'emmet-mode)
 
@@ -420,31 +489,23 @@
           (funcall (cdr my-pair)))))
 (put 'downcase-region 'disabled nil)
 
-(require 'org-journal)
-(setq org-journal-dir '/home/shadowswalker/Documents/org/journals)
+;; (require 'org-journal)
+;; (setq org-journal-dir '/home/shadowswalker/Documents/Org/Agendas)
 
 ;; set line-wrap
-(global-visual-line-mode t)
+;; (global-visual-line-mode t)
 
 ;; multi-term for terminal
 (require 'multi-term)
 (global-set-key (kbd "C-c t") 'multi-term)
 
+;; mark right
+(setq mark-ring-max 6)
+(setq global-mark-ring-max 6)
+(global-set-key (kbd "C-u C-SPC") 'pop-global-mark)
+(global-set-key (kbd "C-u C-SPC") 'xah-pop-local-mark-ring)
+
 ;; skewer mode
 (add-hook 'js2-mode-hook 'skewer-mode)
 (add-hook 'css-mode-hook 'skewer-css-mode)
 (add-hook 'html-mode-hook 'skewer-html-mode)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (yaml-mode typescript-mode zenburn-theme writeroom-mode writegood-mode which-key web-mode-edit-element ujelly-theme smartparens ripgrep restart-emacs quickrun pythonic py-autopep8 prettier-js powerline org-journal multiple-cursors multi-term material-theme markdown-preview-mode magit jedi hlinum helm-projectile helm-ag google-c-style ghub flyspell-correct-ivy flymake-google-cpplint flycheck emmet-mode elpy ein dracula-theme doom-themes company-web company-tabnine company-jedi company-auctex clues-theme blackboard-theme auto-virtualenv add-node-modules-path ace-jump-mode abyss-theme))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

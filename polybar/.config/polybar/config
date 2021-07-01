@@ -1,15 +1,9 @@
-[colors]
-background = #222
-background-alt = #444
-foreground = #dfdfdf
-foreground-alt = #555
-primary = #ffb52a
-secondary = #e60053
-alert = #bd2c40
+
+include-file = ~/.config/polybar/colors.ini
 
 [bar/custom]
 ; monitor = ${env:MONITOR:HDMI-1}
-monitor = eDP1
+monitor = ${env:MONITOR:eDP1}
 width = 100%
 height = 15
 ; offset-x = 1%
@@ -20,8 +14,8 @@ fixed-center = true
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-; line-size = 3
-; line-color = #f00
+line-size = 3
+line-color = #f00
 
 ; border-size = 1
 ; border-color = #00000000
@@ -32,13 +26,21 @@ padding-right = 0
 module-margin-left = 2
 module-margin-right = 1
 
-font-0 = fixed:pixelsize=8;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=8;1
+font-0 = "SF Pro Display:style=Regular:size=8;3"
+font-1 = "SF Pro Display:style=Regular:size=10;3"
+; font-2 = "Jam\-icons:style=Regular:size=13;4"
+; font-2 = FontAwesome:pixelsize=12;0
+; font-0 = fixed:pixelsize=8;1
+; font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+; font-2 = siji:pixelsize=8;1
 
-modules-left = bspwm
-modules-center = mpd
-modules-right = backlight xkeyboard cpu memory battery date
+font-2 = WunconSiji:pixelsize=10;1
+font-3 = FontAwesome:pixelsize=14;0
+
+modules-left = i3
+; modules-left = bspwm mpd
+modules-center = date
+modules-right = backlight xkeyboard cpu memory battery
 
 tray-position = right
 tray-offset-x = 0
@@ -46,11 +48,11 @@ tray-padding = 5
 tray-maxsize = 12
 tray-scale = 1
 tray-padding-left = 5
-tray-background = ${colors.background}
+; tray-background = ${colors.background}
 ; tray-background = #0063ff
 
-wm-restack = bspwm
-;wm-restack = i3
+; wm-restack = bspwm
+wm-restack = i3
 
 ;override-redirect = true
 
@@ -60,65 +62,14 @@ wm-restack = bspwm
 ;scroll-up = i3wm-wsnext
 ;scroll-down = i3wm-wsprev
 
-; cursor-click = pointer
-; cursor-scroll = ns-resize
+cursor-click = pointer
+cursor-scroll = ns-resize
 
-[bar/bar_extended]
-bottom = false
-monitor = DP1
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
 
-width = 100%
-height = 15
-; offset-x = 1%
-offset-y = 0%
-radius = 2.0
-fixed-center = true
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-
-; line-size = 3
-; line-color = #f00
-
-; border-size = 1
-; border-color = #00000000
-
-padding-left = 0
-padding-right = 0
-
-module-margin-left = 2
-module-margin-right = 1
-
-font-0 = fixed:pixelsize=8;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=8;1
-
-modules-left = bspwm
-modules-right = backlight xkeyboard cpu memory battery date
-
-tray-position = right
-tray-offset-x = 0
-tray-padding = 5
-tray-maxsize = 12
-tray-scale = 1
-tray-padding-left = 5
-tray-background = ${colors.background}
-; tray-background = #0063ff
-
-wm-restack = bspwm
-;wm-restack = i3
-
-;override-redirect = true
-
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
-
-; cursor-click = pointer
-; cursor-scroll = ns-resize
-
+; inter-process connection
+enable-ipc = true
 
 [module/xwindow]
 type = internal/xwindow
@@ -130,15 +81,16 @@ blacklist-0 = num lock
 
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = ${colors.secondary}
+; format-prefix-underline = ${colors.secondary}
 
 label-layout = %layout%
-label-layout-underline = ${colors.secondary}
+; label-layout-underline = ${colors.secondary}
 
 label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
 label-indicator-underline = ${colors.secondary}
+label-indicator-foreground = ${colors.foreground}
 
 [module/filesystem]
 type = internal/fs
@@ -150,22 +102,25 @@ label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
-[module/bspwm]
-type = internal/bspwm
+; [module/bspwm]
+; type = internal/bspwm
+; format = <label-state> <label-mode>
+; index-sort = true
+; wrapping-scroll = false
 
-label-focused = %index%
-label-focused-background = ${colors.background-alt}
-label-focused-underline= ${colors.primary}
+label-focused = %name%
+label-focused-foreground = #ffffff
+label-focused-background = #4b5cc4
 label-focused-padding = 2
 
-label-occupied = %index%
+label-occupied = %name%
 label-occupied-padding = 2
 
-label-urgent = %index%!
+label-urgent = %name%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 
-label-empty = %index%
+label-empty = %name%
 label-empty-foreground = ${colors.foreground-alt}
 label-empty-padding = 2
 
@@ -210,9 +165,15 @@ label-urgent-padding = 2
 ; label-separator = |
 
 
-[module/mpd]
+[module/mpd_old]
 type = internal/mpd
 format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+
+; icon-prev = 
+; icon-stop = 
+; icon-play = 
+; icon-pause = 
+; icon-next = 
 
 icon-prev = 
 icon-stop = 
@@ -220,6 +181,24 @@ icon-play = 
 icon-pause = 
 icon-next = 
 
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+[module/mpd]
+type = internal/mpd
+interval = 2
+format-online = <label-song> <icon-prev> <icon-stop> <toggle> <icon-next>
+label-song = 𝄞 %artist% - %title%
+icon-play = ⏵
+icon-pause = ⏸
+icon-stop = ⏹
+icon-prev = ⏮
+icon-next = ⏭
+icon-seekb = ⏪
+icon-seekf = ⏩
+icon-random = 🔀
+icon-repeat = 🔁
+icon-repeatone = 🔂
 label-song-maxlen = 25
 label-song-ellipsis = true
 
@@ -251,7 +230,7 @@ type = internal/cpu
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
+; format-underline = #f90000
 label = %percentage:2%%
 
 [module/memory]
@@ -259,7 +238,7 @@ type = internal/memory
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
+; format-underline = #4bffdc
 label = %percentage_used%%
 
 [module/wifi]
@@ -278,7 +257,7 @@ interface = wlp3s0
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
+; format-connected-underline = #9f78e1
 label-connected = %essid%
 
 format-disconnected =
@@ -299,7 +278,7 @@ type = internal/network
 interface = enp2s0
 interval = 3.0
 
-format-connected-underline = #55aa55
+; format-connected-underline = #55aa55
 format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.foreground-alt}
 label-connected = %local_ip%
@@ -314,27 +293,39 @@ format-disconnected =
 type = internal/date
 interval = 5
 
-date =
-date-alt = " %Y-%m-%d"
-
+date = %a %d
+date-alt = " %d-%m-%Y"
 time = %H:%M
-time-alt = %H:%M:%S
-
-format-prefix = 
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+time-alt = %H:%M
 
 label = %date% %time%
+format = 􀐫 <label>
+
+; format-prefix = 
+; format-prefix-foreground = ${colors.foreground-alt}
+; format-underline = #0a6cf5
+
+; format-background = #1e1f1eff
+; format-foreground = #fff
+
+; label = %date% %time%
+; label-font = 7
+; label-foreground = #eaeaea
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
-; format-volume = <label-volume> <bar-volume>
-; label-volume = VOL %percentage%%
-; label-volume-foreground = ${root.foreground}
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL %percentage%%
+label-volume-foreground = ${root.foreground}
 
-; label-muted = 🔇 muted
-; label-muted-foreground = #666
+label-muted = 🔇 muted
+label-muted-foreground = ${colors.foreground}
+
+ramp-volume-0 = 􀊠
+ramp-volume-1 = 􀊤
+ramp-volume-2 = 􀊦
+ramp-volume-3 = 􀊦
 
 ; bar-volume-width = 10
 ; bar-volume-foreground-0 = #55aa55
@@ -390,7 +381,7 @@ full-at = 98
 
 ; format-charging = <animation-charging> <label-charging>
 format-charging = <label-charging>
-format-charging-underline = #ffb52a
+; format-charging-underline = #ffb52a
 
 format-discharging = <animation-discharging> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
@@ -473,6 +464,7 @@ screenchange-reload = true
 ;pseudo-transparency = false
 
 [global/wm]
+[global/wm]
 margin-top = 0
 margin-bottom = 0
 
@@ -490,3 +482,10 @@ click-right = /home/shadowswalker/.sw/scripts/polypomo/polypomo end
 click-middle = /home/shadowswalker/.sw/scripts/polypomo/polypomo lock
 scroll-up = /home/shadowswalker/.sw/scripts/polypomo/polypomo time +60
 scroll-down = /home/shadowswalker/.sw/scripts/polypomo/polypomo time -60
+
+; [module/monocle-wins]
+; type = custom/ipc
+; hook-0 = ~/.config/bspwm/scripts/monocle-wins.sh
+; hook-1 = echo ""
+; format-prefix = " "
+; initial = 1

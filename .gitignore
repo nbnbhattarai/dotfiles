@@ -6,3 +6,5 @@ playlists/
 *__pycache__*
 
 *~
+
+*.log*

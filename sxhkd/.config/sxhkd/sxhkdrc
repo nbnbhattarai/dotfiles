@@ -157,7 +157,7 @@ XF86AudioPrev
 # brightness keymapx
 XF86MonBrightnessUp
     xbacklight +5;
-    sh /home/shadowswalker/.sw/scripts/br.sh
+    sh $HOME/.sw/scripts/br.sh
 XF86MonBrightnessDown
     xbacklight -5;
 super + XF86MonBrightnessUp
@@ -179,10 +179,10 @@ shift + alt + p
 # list all the windows in current desktop
 alt + j
     rofi -show windowcd
-    # sh /home/shadowswalker/.sw/scripts/windows_list_bsp.sh
+    # sh $HOME/.sw/scripts/windows_list_bsp.sh
 
 super + shift + u
-      feh /home/shadowswalker/Documents/map.jpg
+      feh $HOME/Documents/map.jpg
 
 # goto the last active window (node)
 super + e
@@ -193,10 +193,8 @@ super + shift + f
       firefox
 
 super + shift + e
-      emacs
-
-super + shift + m
-      mendeleydesktop
+      emacsclient -c
+      #emacs
 
 super + shift + o
       okular
@@ -211,16 +209,15 @@ alt + ctrl + 0
 alt + ctrl + 9
     picom-trans -c -10
 
-
 # send windows to neatherlands
 alt + ctrl + h
     bspc node -g hidden=on
 
-alt + ctrl + j
-    /home/shadowswalker/.config/rofi/scripts/rofi-list-hidden-windows.sh
+alt + ctrl + i
+    sh $HOME/.config/rofi/scripts/rofi-list-hidden-windows.sh
 
 alt + ctrl + o
-    /home/shadowswalker/.config/rofi/scripts/rofi-emoji.sh
+    sh $HOME/.config/rofi/scripts/rofi-emoji.sh
 
 shift + alt + l
     slock
@@ -233,6 +230,19 @@ super + n
 super + shift + minus
     floatexec -e htop
 
+# for pypomo
+super + p
+    floatexec alacritty -e pypomo
+
 # for anki
 super + a
     anki
+
+super + shift + v
+    floatexec alacritty -e pulsemixer
+
+XF86AudioLowerVolume
+    sh $HOME/.config/sxhkd/scripts/volume_down.sh
+
+XF86AudioRaiseVolume
+    sh $HOME/.config/sxhkd/scripts/volume_up.sh

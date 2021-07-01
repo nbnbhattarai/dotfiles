@@ -6,18 +6,30 @@ killall -q polybar
 # pkill sxhkd
 # sxhkd &
 
-polybar custom &
+# pkill alttab
 
-if [[ $(bspc query -M | wc -l) == 4 ]]; then
-    notify-send "Two monitors Detected!"
-    bspc monitor eDP1 -d 1 2 3 4 5 6 7 8
-    bspc monitor DP1  -d 9 0
-    # polybar bar_extended &
+# alttab -fg "#d58681" -bg "#4a4a4a" -frame "#eb564d" -t 128x150 -i 127x64&
+
+if [[ $(xrandr | grep "^DP1" | grep ' connected') ]]; then
+    xrandr --output DP1 --mode 1360x768 --rate 60 --right-of "eDP1" --brightness 0.4 --primary;
+    # bspc monitor eDP1 -d 1 2 3 4 5 6 7 8 9;
+    # bspc monitor DP1 -d 10;
+    MONITOR=eDP1 polybar custom &
 else
-    bspc monitor eDP1 -d 1 2 3 4 5 6 7 8 9 0
+    xrandr --output eDP1 --primary;
+    bspc monitor eDP1 -d 1 2 3 4 5 6 7 8 9 10;
+    MONITOR=eDP1 polybar custom&
 fi
 
-bspc config border_width       2
+# if [[ $(bspc query -M | wc -l) == 2 ]]; then
+#     bspc monitor DP1 -d 1 2 3 4 5 6 7 8 9 0
+#     # bspc monitor DP1  -d 9 0
+#     # polybar bar_extended &
+# else
+#     bspc monitor eDP1 -d 1 2 3 4 5 6 7 8 9 0
+# fi
+
+bspc config border_width       5
 bspc config window_gap         4
 bspc config top_padding        0
 
@@ -34,25 +46,29 @@ bspc config focus_follows_pointer true
 bspc config history_aware_focus true
 bspc config focus_by_distance true
 
+# need floating
 bspc rule -a dialog state="floating" center=true
+bspc rule -a emacs state="floating" center=true
+bspc rule -a Notes state="floating" center=true
+bspc rule -a Zotero state="floating" center=true
 
 # for desktop 1
 bspc rule -a Thunar                  desktop=^1
-bspc rule -a Pcmanfm                 desktop=^1
+bspc rule -a Pcmanfm -o              desktop=^1
 bspc rule -a ranger                  desktop=^1
 
 # for desktop 3
-bspc rule -a Emacs                   desktop=^3 state=tiled
+# bspc rule -a Emacs                   desktop=^3 state=tiled
 bspc rule -a Code                    desktop=^3
 
 # for desktop 4
-bspc rule -a Mendeley\ Desktop       desktop=^4
-bspc rule -a okular                  desktop=^4
+bspc rule -a Zotero -o               desktop=^4
+bspc rule -a okular -o               desktop=^4
 bspc rule -a polar-bookshelf         desktop=^4
 
 #for desktop 5
 bspc rule -a Chromium                desktop=^5
-bspc rule -a firefox                 desktop=^5
+bspc rule -a firefox -o              desktop=^5 follow=on
 
 # for desktop 6
 bspc rule -a vlc                     desktop=^6 state=floating
@@ -62,19 +78,18 @@ bspc rule -a zoom		     desktop=^6
 
 # for desktop 7
 bspc rule -a Skype                   desktop=^7
-bspc rule -a Mailspring              desktop=^7
+# bspc rule -a Mailspring              desktop=^7
 bspc rule -a ViberPC		     desktop=^7
 
 # for desktop 8
 # bspc rule -a Anki                    desktop=^8
-bspc rule -a Anki center=true state=floating rectangle=700x500+0+0 
+# bspc rule -a Anki center=true state=floating rectangle=700x500+0+0 
 
 bspc rule -a nixnote2                desktop=^8
 bspc rule -a ghostwriter             desktop=^8
 bspc rule -a Transmission-gtk        desktop=^8
 
 bspc rule -a GoldenDict     state=floating --rectangle=100x150
-bspc rule -a imv            state=floating --rectangle=500x400
 bspc rule -a Evince         state=floating
 bspc rule -a Arandr         state=floating
 bspc rule -a Pavucontrol    state=floating
