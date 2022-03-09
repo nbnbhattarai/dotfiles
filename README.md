@@ -3,7 +3,18 @@ This repository contains an opinionated set of shell customization settings (dot
 
 # Getting Started
 ## Create your own copy of this repo
-Your own dotfiles repo should be private, since it might contain SSH keys and other secret information. _DON'T_ fork this repo - instead [follow these steps to create your own copy](https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository).
+Your own dotfiles repo should be private, since it might contain SSH keys and other secret information. _DON'T_ fork this repo - instead follow these steps to create your own copy:
+1. [Create a new personal repo](https://github.com/new) named `dotfiles` (or whatever you'd like)
+2. Make sure that repo is PRIVATE
+3. [Duplicate the repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository):
+```
+git clone --bare git@github.com:ClipboardHealth/dotfiles.git
+cd dotfiles
+git push --mirror git@github.com:YOUR_USERNAME/dotfiles.git
+cd .. && rm -rf dotfiles.git
+git clone git@github.com:YOUR_USERNAME/dotfiles.git
+code dotfiles
+```
 ## Add your SSH keys
 GitHub has deprecated HTTPS cloning, so you will need your SSH keys on any development machine:
 1. [Create an SSH Key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and [add it to GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) (if you haven't already)
