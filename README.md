@@ -49,6 +49,13 @@ homesick cd dotfiles
 ```
 homesick link dotfiles
 ```
+# Staying up-to-date
+You can update your repo with the latest changes to this one at any time by running:
+```
+./update.sh
+# Then, manage any merge conflicts that arise (if any)
+git push
+```
 # Included Features
 - [Oh-my-zsh](https://ohmyz.sh/) with the [autosuggestions](https://github.com/zsh-users/zsh-autosuggestions#readme) and [syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting#readme) plugins and a customized [agnoster](https://github.com/agnoster/agnoster-zsh-theme#readme) theme
 - [A script to auto-load your SSH key on startup so you only need to enter its password once](home/custom-shell-scripts/ssh-agent.sh)
