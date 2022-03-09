@@ -51,8 +51,9 @@ homesick link dotfiles
 ```
 # Included Features
 - [Oh-my-zsh](https://ohmyz.sh/) with the [autosuggestions](https://github.com/zsh-users/zsh-autosuggestions#readme) and [syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting#readme) plugins and a customized [agnoster](https://github.com/agnoster/agnoster-zsh-theme#readme) theme
-- Auto-load your SSH key on startup so you only need to enter its password once
+- [A script to auto-load your SSH key on startup so you only need to enter its password once](home/custom-shell-scripts/ssh-agent.sh)
 - [`thefuck`](https://github.com/nvbn/thefuck#readme) commandline tool to retry common mistakes (aliased to `retry`)
+![retry](https://user-images.githubusercontent.com/7649736/157540204-f6411841-0411-49c8-9175-8bee6302b66e.gif)
 - Custom `git` functions authored by @ddhorstman (see documentation by running these commands with `--help`):
   - `gitc` allows you to quickly make a commit with an included message:
   ![gitc](https://user-images.githubusercontent.com/7649736/157537443-d466e66f-ac75-40ac-bfec-904c7d9fb268.gif)
