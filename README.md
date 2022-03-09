@@ -38,3 +38,8 @@ homesick cd dotfiles
 ```
 homesick link dotfiles
 ```
+# Included Features
+- [Oh-my-zsh](https://ohmyz.sh/) with the [autosuggestions](https://github.com/zsh-users/zsh-autosuggestions#readme) and [syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting#readme) plugins and a customized [agnoster](https://github.com/agnoster/agnoster-zsh-theme#readme) theme
+- Auto-load your SSH key on startup so you only need to enter its password once
+- [`thefuck`](https://github.com/nvbn/thefuck#readme) commandline tool to retry common mistakes (aliased to `retry`)
+- Custom `git` functions authored by @ddhorstman:

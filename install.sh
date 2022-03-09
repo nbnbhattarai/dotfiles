@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script is intended to be run upon setting up a new system in GH Codespaces
-# To use locally, run ./install.sh local to skip copying dotfiles outside source control
+# To use locally, run `./install.sh local` to skip copying dotfiles outside source control
 
 # Install Oh-my-zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -21,7 +21,7 @@ chmod 600 ~/.ssh/id_rsa.pub ~/.ssh/id_rsa
 # Install additional dependencies
 # NVM
 which nvm >/dev/null || curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-# Linux-specific installation
+# Linux-specific installation (Codespaces uses Linux)
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo apt update
   sudo apt install git-crypt
