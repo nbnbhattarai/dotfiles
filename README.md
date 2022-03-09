@@ -42,4 +42,14 @@ homesick link dotfiles
 - [Oh-my-zsh](https://ohmyz.sh/) with the [autosuggestions](https://github.com/zsh-users/zsh-autosuggestions#readme) and [syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting#readme) plugins and a customized [agnoster](https://github.com/agnoster/agnoster-zsh-theme#readme) theme
 - Auto-load your SSH key on startup so you only need to enter its password once
 - [`thefuck`](https://github.com/nvbn/thefuck#readme) commandline tool to retry common mistakes (aliased to `retry`)
-- Custom `git` functions authored by @ddhorstman:
+- Custom `git` functions authored by @ddhorstman (see documentation by running these commands with `--help`):
+  - `gitc` allows you to quickly make a commit with an included message:
+  ![gitc](https://user-images.githubusercontent.com/7649736/157537443-d466e66f-ac75-40ac-bfec-904c7d9fb268.gif)
+  - `gitb` allows you to navigate branches based on partial matches:
+  ![gitb-1](https://user-images.githubusercontent.com/7649736/157537125-4443dd27-fc55-4bb8-8492-2a5c5d7d82b4.gif)
+  - and creates branches if no matches are found:
+  ![gitb-2](https://user-images.githubusercontent.com/7649736/157537795-b89f86dc-07ae-420c-85b4-b6313d88f2fe.gif)
+  - and supports partial-name-matching on deletion (`-D`) and rebase (`-R`) commands:
+  ![gitb-3](https://user-images.githubusercontent.com/7649736/157538515-58ad421f-bc1f-4737-9a90-212d6ef54f7e.gif)
+  - `gitp` automatically suggests creating a new upstream from your branch if none is found:
+  ![gitp](https://user-images.githubusercontent.com/7649736/157538162-f4cd1d25-9972-4066-91ad-9fdb44fa4bd4.gif)
