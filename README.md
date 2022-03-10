@@ -43,7 +43,7 @@ homesick clone YOUR_GITHUB_USERNAME/dotfiles
 ```
 homesick cd dotfiles
 ```
-4. Run the installation script without copying the doftiles themselves (`homesick` uses symlinks to keep the files themselves within source control):
+4. Run the installation script without copying the dotfiles themselves (`homesick` uses symlinks to keep them within source control):
 ```
 ./install.sh local
 ```
@@ -60,7 +60,7 @@ git push
 exit
 ```
 # Staying up-to-date
-You can update your personal dotfile repo with the latest changes to the organization one at any time by running:
+You can pull the latest changes to the organization dotfile repo into your personal one at any time by running:
 ```
 ./update.sh
 # Then, manage any merge conflicts that arise (if any)
