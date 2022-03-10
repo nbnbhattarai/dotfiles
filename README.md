@@ -28,6 +28,8 @@ GitHub has deprecated HTTPS cloning, so you will need your SSH keys on any devel
 2. Enable Dotfile support and select your personal dotfile repo:
 ![image](https://user-images.githubusercontent.com/7649736/157506457-79949742-2585-4e73-ab50-6e5962e0ce5f.png)
 
+3. Any future Codespaces you spin up will use these dotfiles! Note that they are part of the initialization process, so you'll only see changes when creating new Codespaces.
+
 ## Use these dotfiles locally
 Although the motivation behind this repo was to improve the Codespaces experience, you can also use it to sync dotfiles across your local machine(s). It's designed to work with [homesick](https://github.com/technicalpickles/homesick), although it should be adaptable to work with [any of GitHub's recommended dotfile-management tools](https://dotfiles.github.io/utilities/).
 To use this with `homesick` (requires `ruby`):
@@ -45,9 +47,17 @@ homesick cd dotfiles
 ```
 ./install.sh local
 ```
-5 Link the dotfiles in `home/` to your local `~`
+5. Link the dotfiles in `home/` to your local `~`
 ```
 homesick link dotfiles
+```
+6. Push any changes you make to remote to keep your machines in sync
+```
+homesick cd dotfiles
+git add -A
+git commit
+git push
+exit
 ```
 # Staying up-to-date
 You can update your personal dotfile repo with the latest changes to the organization one at any time by running:
