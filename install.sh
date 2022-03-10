@@ -24,14 +24,12 @@ which nvm >/dev/null || curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0
 # Linux-specific installation (Codespaces uses Linux)
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   sudo apt update
-  sudo apt install git-crypt
   sudo apt install python3 python3-dev python3-pip python3-setuptools
   pip3 install thefuck --user
 # MacOS-specific installation
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # Install homebrew
   which brew >/dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  brew install git-crypt
   brew install thefuck
 fi
 
