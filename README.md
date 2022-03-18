@@ -21,7 +21,7 @@ GitHub has deprecated HTTPS cloning, so you will need your SSH keys on any devel
 2. Copy your `id_rsa` to `.ssh` in this repo, commit the changes, and push.
 ## Apply further customizations
 - Edit which code runs when the Codespaces is initialized in [`install.sh`](install.sh)
-- Edit which shell aliases/functions are loaded in the environment in [`.zshrc`](home/.zshrc) (you could also use a `.bashrc`, but why would you?).
+- Edit which shell aliases/functions are loaded in the environment in the [`.zshrc`](home/.zshrc) or [`.bashrc`](home/.bashrc)
 ## Use these dotfiles in GitHub Codespaces
 0. Codespaces must be enabled - this is an organization-wide setting which should be turned on for ClipboardHealth.
 1. Go to [your settings](https://github.com/settings/codespaces)
