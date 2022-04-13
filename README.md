@@ -18,7 +18,7 @@ code dotfiles
 ## Add your SSH keys
 GitHub has deprecated HTTPS cloning, so you will need your SSH keys on any development machine:
 1. [Create an SSH Key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and [add it to GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) (you can use an existing key, but for better security, it's recommended to create a dedicated one for codespaces)
-2. Copy your `id_rsa` to `.ssh` in this repo, commit the changes, and push.
+2. Copy your `id_rsa` and `id_rsa.pub` to `.ssh` in this repo, commit the changes, and push.
 ## Apply further customizations
 - Edit which code runs when the Codespaces is initialized in [`install.sh`](install.sh)
 - Edit which shell aliases/functions are loaded in the environment in the [`.zshrc`](home/.zshrc) or [`.bashrc`](home/.bashrc)
